@@ -1,20 +1,85 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <ion-buttons slot="end">
+      <ion-icon slot="icon-only" name="code-working"></ion-icon>
+    </ion-buttons>
+    <ion-title>¡Aprende a Programar Usando Pseudo-Código!</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label>Nivel</ion-label>
+        <ion-select [(ngModel)]="currentLevel" placeholder="Cambia de nivel">
+          <ion-select-option value="1">Nivel 1</ion-select-option>
+          <ion-select-option value="2">Nivel 2</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-card color="light">
+        <ion-card-header>
+          <ion-card-subtitle><br>{{levels[currentLevel-1].title}}</ion-card-subtitle>
+          <ion-card-title>
+            <ion-icon name="bulb"></ion-icon>Objetivo
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content style="color:lightgray">
+          {{levels[currentLevel-1].description}}
+        </ion-card-content>
+      </ion-card>
+      <ion-card color="light">
+        <ion-card-header>
+          <ion-card-title style="font-size: 20px;">
+            <ion-icon name="bug"></ion-icon>Debugger
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content style="color:lightslategray">
+          <span *ngIf="!debug">(Nada para mostrar)</span>
+          <span *ngIf="debug">
+            <span *ngFor="let item of debug | keyvalue">
+              {{item.key}}: {{item.value.value? item.value.value: 'undefined'}}<br>
+            </span>
+          </span>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+    <ion-col size="9">
+      <form #form="ngForm" (ngSubmit)="sendCode(form)">
+        <ion-row>
+          <ion-col>
+            <ion-item color="dark">
+              <ion-label position="stacked" color="success">Mí Código</ion-label>
+              <ion-textarea name="code" rows="22" cols="50" ngModel [disabled]="!disableNextLevel"></ion-textarea>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col style="text-align: right;">
+            <ion-button type="submit" style="width: 100%;" expand="full" color="dark">
+              Ejecutar Código
+            </ion-button>
+          </ion-col>
+          <ion-col style="text-align: right;">
+            <ion-button style="width: 100%;" expand="full" color="dark" [disabled]="disableNextLevel" (click)="nextLevel()">
+              Siguiente Nivel
+            </ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-card color="light">
+              <ion-card-header>
+                <ion-card-subtitle>Terminal</ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content class="ws" style="color:lightslategray">
+                {{terminal}}
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </form>
+    </ion-col>
+  </ion-row>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
 </ion-content>
