@@ -19,16 +19,22 @@ export class HomePage implements OnInit {
         console.log(response)
         if (response.response.vars) {
           this.debug = response.response.vars
-          if (response.response.vars["'x'"]) {
+          if (response.response.vars["'x'"] && !response.response.error) {
             this.terminal += " ¡Felicitaciones! pasas al siguiente nivel :D \n >:"
             this.disableNextLevel = false
             console.log("yes")
+          } else if (response.response.error === 1) {
+            this.terminal += " Error Sintáctico: verifica la sintaxis de tu programa \n >:"
+          } else if (response.response.error) {
+            this.terminal += ` Error Semántico: ${response.response.error}  \n >:`
           } else {
             this.terminal += " Error: no has declarado la variable 'x' \n >:"
           }
         } else {
           if (response.response.error === 1) {
             this.terminal += " Error Sintáctico: verifica la sintaxis de tu programa \n >:"
+          } else if (response.response.error) {
+            this.terminal += " Error Semántico: verifica tu programa \n >:"
           }
         }
       }
@@ -40,16 +46,23 @@ export class HomePage implements OnInit {
         console.log(response)
         if (response.response.vars) {
           this.debug = response.response.vars
-          if (response.response.vars["'x'"] && response.response.vars["'x'"].value === 1) {
+          if (response.response.vars["'x'"] && response.response.vars["'x'"].value === 1 && !response.response.error) {
             this.terminal += " ¡Felicitaciones! pasas al siguiente nivel :D \n >:"
             this.disableNextLevel = false
             console.log("yes")
+          } else if (response.response.error === 1) {
+            this.terminal += " Error Sintáctico: verifica la sintaxis de tu programa \n >:"
+          } else if (response.response.error) {
+            this.terminal += ` Error Semántico: ${response.response.error}  \n >:`
           } else {
             this.terminal += " Error: no has declarado la variable 'x' o no le has asignado un valor\n >:"
           }
         } else {
           if (response.response.error === 1) {
             this.terminal += " Error Sintáctico: verifica la sintaxis de tu programa \n >:"
+          }
+          if (response.response.error) {
+            this.terminal += " Error Semántico: verifica tu programa \n >:"
           }
         }
       }
@@ -64,9 +77,15 @@ export class HomePage implements OnInit {
   }
   async sendCode(form) {
     console.log(form.value)
-    let response = await this.connection.sendCode(form.value)
+    let response = await this.connection.sendCode(this.cleanCode(form.value))
     console.log(response)
     this.levels[this.currentLevel - 1].winning(response)
+  }
+
+  cleanCode(code) {
+    let sendCode = code.code.replace(/\n/g, ' ')
+    sendCode += ' '
+    return { code: sendCode };
   }
   ngOnInit() {
     this.currentLevel = 1
