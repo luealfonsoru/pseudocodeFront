@@ -62,7 +62,7 @@
           <ion-col>
             <ion-item color="dark">
               <ion-label position="stacked" color="success">Mí Código</ion-label>
-              <ion-textarea name="code" rows="22" cols="50" ngModel [disabled]="!disableNextLevel"></ion-textarea>
+              <ion-textarea name="code" rows="22" cols="50" [(ngModel)]="code" [disabled]="!disableNextLevel"></ion-textarea>
             </ion-item>
           </ion-col>
         </ion-row>

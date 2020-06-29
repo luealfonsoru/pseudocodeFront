@@ -8,9 +8,15 @@ import { ConnectionService } from '../services/connection.service';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
+  code = ""
   terminal = '>:'
   debug
   disableNextLevel = true
+  winLevel(){
+    this.terminal += " ¡Felicitaciones! pasas al siguiente nivel :D \n >:"
+    this.disableNextLevel = false
+    this.code = ""
+  }
   levels = [
     {
       title: "Crea una variable",
@@ -21,9 +27,7 @@ export class HomePage implements OnInit {
         if (response.response.vars) {
           this.debug = response.response.vars
           if (response.response.vars["'x'"] && !response.response.error) {
-            this.terminal += " ¡Felicitaciones! pasas al siguiente nivel :D \n >:"
-            this.disableNextLevel = false
-            console.log("yes")
+            this.winLevel();
           } else if (response.response.error === 1) {
             this.terminal += " Error Sintáctico: verifica la sintaxis de tu programa \n >:"
           } else if (response.response.error) {
@@ -49,9 +53,7 @@ export class HomePage implements OnInit {
         if (response.response.vars) {
           this.debug = response.response.vars
           if (response.response.vars["'x'"] && response.response.vars["'x'"].value === 1 && !response.response.error) {
-            this.terminal += " ¡Felicitaciones! pasas al siguiente nivel :D \n >:"
-            this.disableNextLevel = false
-            console.log("yes")
+            this.winLevel()
           } else if (response.response.error === 1) {
             this.terminal += " Error Sintáctico: verifica la sintaxis de tu programa \n >:"
           } else if (response.response.error) {
@@ -78,9 +80,7 @@ export class HomePage implements OnInit {
         if (response.response.vars) {
           this.debug = response.response.vars
           if (response.response.printStream.length > 0) {
-            this.terminal += " ¡Felicitaciones! pasas al siguiente nivel :D \n >:"
-            this.disableNextLevel = false
-            console.log("yes")
+            this.winLevel()
           } else if (response.response.error === 1) {
             this.terminal += " Error Sintáctico: verifica la sintaxis de tu programa \n >:"
           } else if (response.response.error) {
@@ -108,9 +108,7 @@ export class HomePage implements OnInit {
           this.debug = response.response.vars
           console.log(Object.keys(response.response.vars).length)
           if (Object.keys(response.response.vars).length === 3) {
-            this.terminal += " ¡Felicitaciones! pasas al siguiente nivel :D \n >:"
-            this.disableNextLevel = false
-            console.log("yes")
+            this.winLevel()
           } else if (response.response.error === 1) {
             this.terminal += " Error Sintáctico: verifica la sintaxis de tu programa \n >:"
           } else if (response.response.error) {
