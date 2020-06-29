@@ -15,7 +15,6 @@ export class HomePage implements OnInit {
   winLevel(){
     this.terminal += " ¡Felicitaciones! pasas al siguiente nivel :D \n >:"
     this.disableNextLevel = false
-    this.code = ""
   }
   levels = [
     {
@@ -133,6 +132,7 @@ export class HomePage implements OnInit {
     this.currentLevel += 1
     this.terminal = ">:"
     this.disableNextLevel = true
+    this.code = ""
   }
   async sendCode(form) {
     console.log(form.value)
