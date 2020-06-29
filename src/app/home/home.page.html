@@ -15,17 +15,29 @@
         <ion-select [(ngModel)]="currentLevel" placeholder="Cambia de nivel">
           <ion-select-option value="1">Nivel 1</ion-select-option>
           <ion-select-option value="2">Nivel 2</ion-select-option>
+          <ion-select-option value="3">Nivel 3</ion-select-option>
+          <ion-select-option value="4">Nivel 4</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-card color="light">
         <ion-card-header>
           <ion-card-subtitle><br>{{levels[currentLevel-1].title}}</ion-card-subtitle>
           <ion-card-title>
-            <ion-icon name="bulb"></ion-icon>Objetivo
+            <ion-icon name="checkmark-circle"></ion-icon>Objetivo
           </ion-card-title>
         </ion-card-header>
         <ion-card-content style="color:lightgray">
           {{levels[currentLevel-1].description}}
+        </ion-card-content>
+      </ion-card>
+      <ion-card color="light">
+        <ion-card-header>
+          <ion-card-title style="font-size: 20px;">
+            <ion-icon name="bulb"></ion-icon>Pistas
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content style="color:lightslategray">
+          {{levels[currentLevel-1].hint}}
         </ion-card-content>
       </ion-card>
       <ion-card color="light">
@@ -38,7 +50,7 @@
           <span *ngIf="!debug">(Nada para mostrar)</span>
           <span *ngIf="debug">
             <span *ngFor="let item of debug | keyvalue">
-              {{item.key}}: {{item.value.value? item.value.value: 'undefined'}}<br>
+              {{item.key}}: {{item.value.value !== undefined? item.value.value: 'indefinido'}}<br>
             </span>
           </span>
         </ion-card-content>
